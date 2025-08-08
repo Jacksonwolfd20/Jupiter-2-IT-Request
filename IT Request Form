@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Metadata and Bulma CSS inclusion -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IT Request – Quick Form</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <meta name="color-scheme" content="light dark" />
+  <style>
+    /* Light polish to complement Bulma */
+    .hero.is-danger {
+      background-image: linear-gradient(90deg, #dc2626, #ef4444);
+    }
+    .subject-narrow { max-width: 480px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <section class="hero is-danger">
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <h1 class="title is-3 has-text-weight-bold">IT Request – Quick Form</h1>
+        <p class="subtitle is-6">Submit your IT issue or request and we'll get on it ASAP</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main -->
+  <section class="section">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-10-tablet is-8-desktop is-7-widescreen">
+          <div class="box">
+            <form id="ticketForm" novalidate>
+              <div class="columns is-multiline">
+                <!-- Full Name -->
+                <div class="column is-half">
+                  <div class="field">
+                    <label class="label" for="name">Full Name<span class="has-text-danger"> *</span></label>
+                    <div class="control">
+                      <input id="name" name="name" class="input" type="text" required />
+                    </div>
+                  </div>
+                </div>
+                <!-- Phone -->
+                <div class="column is-half">
+                  <div class="field">
+                    <label class="label" for="phone">Phone Number<span class="has-text-danger"> *</span></label>
+                    <div class="control">
+                      <input id="phone" name="phone" class="input" type="tel" required />
+                    </div>
+                  </div>
+                </div>
+                <!-- Department -->
+                <div class="column is-half">
+                  <div class="field">
+                    <label class="label" for="dept">Department<span class="has-text-danger"> *</span></label>
+                    <div class="control">
+                      <div class="select is-fullwidth">
+                        <select id="dept" name="department" required>
+                          <option value="">Select department</option>
+                          <option>Accounting</option>
+                          <option>Call Center</option>
+                          <option>Dispatch</option>
+                          <option>HR</option>
+                          <option>IT</option>
+                          <option>Marketing</option>
+                          <option>Mechanic</option>
+                          <option>Payroll</option>
+                          <option>Sales</option>
+                          <option>Techs</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Serial Number -->
+                <div class="column is-half">
+                  <div class="field">
+                    <label class="label" for="asset">Serial Number of Device</label>
+                    <div class="control">
+                      <input id="asset" name="asset" class="input" type="text" />
+                    </div>
+                  </div>
+                </div>
+                <!-- Priority -->
+                <div class="column is-half">
+                  <div class="field">
+                    <label class="label" for="priority">Priority<span class="has-text-danger"> *</span></label>
+                    <div class="control">
+                      <div class="select is-fullwidth">
+                        <select id="priority" name="priority" required>
+                          <option value="">Select priority</option>
+                          <option>Low</option>
+                          <option>Normal</option>
+                          <option>High</option>
+                          <option>Urgent</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Category -->
+                <div class="column is-half">
+                  <div class="field">
+                    <label class="label" for="category">Category<span class="has-text-danger"> *</span></label>
+                    <div class="control">
+                      <div class="select is-fullwidth">
+                        <select id="category" name="category" required>
+                          <option value="">Select category</option>
+                          <option>Microsoft</option>
+                          <option>ServiceTitan</option>
+                          <option>Dialpad</option>
+                          <option>Computer</option>
+                          <option>iPad</option>
+                          <option>Other</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Subject (hidden until category chosen) -->
+                <div id="subjectWrapper" class="column is-full is-hidden">
+                  <div class="field has-text-centered subject-narrow">
+                    <label class="label" for="subject">Subject<span class="has-text-danger"> *</span></label>
+                    <div class="control">
+                      <div class="select is-fullwidth">
+                        <select id="subject" name="subject" required>
+                          <option value="">Select subject</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Description -->
+                <div class="column is-full">
+                  <div class="field">
+                    <label class="label" for="description">Description<span class="has-text-danger"> *</span></label>
+                    <div class="control">
+                      <textarea id="description" name="description" class="textarea" rows="6" maxlength="1500" required></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Submit -->
+              <div class="field has-text-centered">
+                <button type="submit" class="button is-danger is-medium">Submit Ticket</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JS: dynamic subject options based on category -->
+  <script>
+    // Subject options per category
+    const subjectOptions = {
+      Microsoft: ["Outlook Issue", "Teams Problem", "Other"],
+      ServiceTitan: ["Login Issue", "Reporting Issue", "Other"],
+      Dialpad: ["Call Quality Issue", "Login Problem", "Number Assignment", "Other"],
+      Computer: ["Won't Start", "Slow Performance", "Peripheral Issue", "Other"],
+      iPad: ["Screen Damage", "App Not Working", "Connectivity Issue", "Battery Problem", "Other"],
+      Other: ["General Inquiry", "Request for Help", "Other"]
+    };
+
+    const categorySelect = document.getElementById('category');
+    const subjectWrapper = document.getElementById('subjectWrapper');
+    const subjectSelect = document.getElementById('subject');
+
+    categorySelect.addEventListener('change', function() {
+      subjectSelect.innerHTML = '<option value="">Select subject</option>';
+      const selected = this.value;
+      if (subjectOptions[selected]) {
+        subjectOptions[selected].forEach(sub => {
+          const opt = document.createElement('option');
+          opt.value = sub;
+          opt.textContent = sub;
+          subjectSelect.appendChild(opt);
+        });
+        subjectWrapper.classList.remove('is-hidden');
+      } else {
+        subjectWrapper.classList.add('is-hidden');
+      }
+    });
+  </script>
+</body>
+</html>
